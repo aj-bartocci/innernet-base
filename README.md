@@ -1,3 +1,3 @@
 # InnernetBase
 
-A description of this package.
+The base framework that provides shared functionality to the Innernet and InnernetServer frameworks.
