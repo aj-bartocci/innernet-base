@@ -70,15 +70,7 @@ public extension RequestInterceptor {
     ) {
         let intercept = Intercept(
             canIntercept: { req in
-                guard let reqURL = req.url?.absoluteString else {
-                    return false
-                }
-                let reqPaths = PathParser.paths(for: reqURL)
-                let interceptPaths = PathParser.paths(for: url)
-                return PathParser.hasMatch(
-                    forReqPaths: reqPaths,
-                    against: interceptPaths
-                )
+                return Self.defaultMatching(for: req, matching: url)
             },
             onRequest: onRequest
         )
@@ -102,6 +94,18 @@ public extension RequestInterceptor {
  
     func unregisterAll() {
         registeredRoutes = [:]
+    }
+    
+    static func defaultMatching(for request: URLRequest, matching url: String) -> Bool {
+        guard let reqURL = request.url?.absoluteString else {
+            return false
+        }
+        let reqPaths = PathParser.paths(for: reqURL)
+        let interceptPaths = PathParser.paths(for: url)
+        return PathParser.hasMatch(
+            forReqPaths: reqPaths,
+            against: interceptPaths
+        )
     }
 }
 
