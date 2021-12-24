@@ -14,7 +14,7 @@ public class RequestInterceptor {
         case patch
         case custom(String)
         
-        var rawValue: String {
+        public var rawValue: String {
             switch self {
             case .get:
                 return "GET"
